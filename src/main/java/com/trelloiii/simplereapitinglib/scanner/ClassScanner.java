@@ -14,6 +14,16 @@ public class ClassScanner {
     private final char DIR_SEPARATOR='/';
     private final String CLASS_FILE_SUFFIX=".class";
 
+    private static ClassScanner classScanner;
+
+    private ClassScanner(){}
+
+    public static ClassScanner createScanner(){
+        if(classScanner==null){
+            classScanner=new ClassScanner();
+        }
+        return classScanner;
+    }
 
     public List<Class<?>> scan(String basePackage) throws UnsupportedEncodingException {
         String scannedPath=basePackage.replace(this.PKG_SEPARATOR,this.DIR_SEPARATOR);
