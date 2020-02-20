@@ -16,6 +16,10 @@ public class SingleInstance implements Instance {
         return singleInstance;
     }
 
+    public HashMap<Class, Object> getSingleObjects() {
+        return singleObjects;
+    }
+
     @Override
     public Object instance(Class clazz)  {
         if(!singleObjects.containsKey(clazz)){
