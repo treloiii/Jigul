@@ -14,6 +14,14 @@ public class Person {
         this.surname = surname;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
     public Person() {
         System.out.println("INSTANCE OF PERSON");
     }
