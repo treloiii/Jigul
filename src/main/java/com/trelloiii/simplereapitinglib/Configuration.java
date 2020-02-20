@@ -53,8 +53,8 @@ public class Configuration {
         }
 
         this.objectInstance=ObjectInstance.builder(classes);
-        FieldInstance fieldInstance=new FieldInstance(objectInstance);
-        fieldInstance.injectToSingleInstances();
+//        FieldInstance fieldInstance=new FieldInstance(objectInstance);
+//        fieldInstance.injectToSingleInstances();
     }
 
     public Object getPooledObject(Class clazz){

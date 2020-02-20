@@ -36,14 +36,19 @@ public class FieldInstance {
             }
         }
     }
-    public void fieldInstance(List<Field> fields){
+    public void fieldInstance(Object o,Class clazz){
+        Field[] fields=clazz.getDeclaredFields();
         for(Field field:fields){
-            try {
-                field.setAccessible(true);
-                Class<?> fieldType=field.getType();
-                field.set(field.getDeclaringClass(),objectInstance.getInstance(field.getType().getDeclaringClass()));
-            } catch (Exception e) {
-                e.printStackTrace();
+            Annotation[] annotations=field.getDeclaredAnnotations();
+            for(Annotation annotation:annotations){
+                if(annotation instanceof Injectable){
+                    try {
+                        field.setAccessible(true);
+                        field.set(o,objectInstance.getInstance(field.getType()));
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }
