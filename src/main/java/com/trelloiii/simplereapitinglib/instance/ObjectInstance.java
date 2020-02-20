@@ -74,4 +74,6 @@ public class ObjectInstance {
         System.out.println("class "+clazz.getName()+" is single instance");
         singleInstance.instance(clazz);
     }
+
+
 }

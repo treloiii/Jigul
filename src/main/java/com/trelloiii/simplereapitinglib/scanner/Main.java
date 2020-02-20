@@ -15,5 +15,6 @@ public class Main {
 
         Car car=(Car) configuration.getPooledObject(Car.class);
         car.beep();
+        car.getDriver().voice();
     }
 }
