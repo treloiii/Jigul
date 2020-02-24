@@ -19,6 +19,10 @@ public class Car {
         this.color = color;
     }
 
+    public String getMark() {
+        return mark;
+    }
+
     public Car() {
         this.mark="Mercedes";
         this.color="Black";
