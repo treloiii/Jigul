@@ -1,13 +1,11 @@
-package com.trelloiii.simplereapitinglib.instance;
+package com.trelloiii.simplereapitinglib.ioc.instance;
 
-import com.trelloiii.simplereapitinglib.Injectable;
+import com.trelloiii.simplereapitinglib.ioc.Injectable;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
 public class FieldInstance {
     private ObjectInstance objectInstance;
 

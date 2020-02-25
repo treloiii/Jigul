@@ -1,6 +1,6 @@
-package com.trelloiii.simplereapitinglib;
+package com.trelloiii.simplereapitinglib.ioc;
 
-import com.trelloiii.simplereapitinglib.instance.InstanceType;
+import com.trelloiii.simplereapitinglib.ioc.instance.InstanceType;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

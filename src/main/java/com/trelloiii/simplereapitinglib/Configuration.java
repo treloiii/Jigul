@@ -1,6 +1,6 @@
 package com.trelloiii.simplereapitinglib;
 
-import com.trelloiii.simplereapitinglib.instance.ObjectInstance;
+import com.trelloiii.simplereapitinglib.ioc.instance.ObjectInstance;
 import com.trelloiii.simplereapitinglib.scanner.AnnotationScanner;
 import com.trelloiii.simplereapitinglib.scanner.ClassScanner;
 import com.trelloiii.simplereapitinglib.web.ControllerBuilder;

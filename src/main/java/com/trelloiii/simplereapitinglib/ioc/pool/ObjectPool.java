@@ -1,7 +1,7 @@
-package com.trelloiii.simplereapitinglib.pool;
+package com.trelloiii.simplereapitinglib.ioc.pool;
 
 import com.trelloiii.simplereapitinglib.Configuration;
-import com.trelloiii.simplereapitinglib.instance.ObjectInstance;
+import com.trelloiii.simplereapitinglib.ioc.instance.ObjectInstance;
 
 public class ObjectPool {
     private ObjectInstance objectInstance;

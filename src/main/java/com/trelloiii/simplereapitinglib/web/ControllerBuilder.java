@@ -1,7 +1,5 @@
 package com.trelloiii.simplereapitinglib.web;
 
-import com.trelloiii.simplereapitinglib.Get;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;

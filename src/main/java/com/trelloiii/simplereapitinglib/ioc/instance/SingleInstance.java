@@ -1,8 +1,8 @@
-package com.trelloiii.simplereapitinglib.instance;
+package com.trelloiii.simplereapitinglib.ioc.instance;
 
 import java.util.HashMap;
 
-public class SingleInstance implements Instance {
+public class SingleInstance  {
 
     private HashMap<Class,Object> singleObjects;
     private static SingleInstance singleInstance;
@@ -20,7 +20,6 @@ public class SingleInstance implements Instance {
         return singleObjects;
     }
 
-    @Override
     public Object instance(Class clazz)  {
         if(!singleObjects.containsKey(clazz)){
             Object object= null;
