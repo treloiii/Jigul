@@ -7,8 +7,8 @@ import com.trelloiii.simplereapitinglib.web.Get;
 public class ControllerTest {
 
     @Get(path="/doNothing")
-    public String doNothing(String s,String returnable){
-        System.out.println(s);
+    public String doNothing(Integer s,String returnable){
+        System.out.println(s*20+" JHOPA");
         return returnable;
     }
 }

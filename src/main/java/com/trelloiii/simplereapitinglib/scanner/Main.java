@@ -1,7 +1,5 @@
 package com.trelloiii.simplereapitinglib.scanner;
 import com.trelloiii.simplereapitinglib.Application;
-import com.trelloiii.simplereapitinglib.Configuration;
-import com.trelloiii.simplereapitinglib.pool.ControllersPool;
 import com.trelloiii.simplereapitinglib.scanner.test.TestConfig;
 
 public class Main {
