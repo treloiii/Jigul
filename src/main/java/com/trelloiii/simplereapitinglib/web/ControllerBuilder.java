@@ -17,7 +17,7 @@ public class ControllerBuilder {
         for(Class<?> clazz:classes){
             try {
                 Object controller=clazz.newInstance();
-                controllers.put(controller,scanGet(clazz));
+                controllers.put(controller, scanGetPost(clazz));
                 //controllers.add(controller);
             } catch (Exception e){
                 e.printStackTrace();
@@ -35,7 +35,7 @@ public class ControllerBuilder {
         }
         return builder;
     }
-    private List<Method> scanGet(Class<?> clazz){
+    private List<Method> scanGetPost(Class<?> clazz){
         Method [] methods=clazz.getMethods();
         List<Method> result=new ArrayList<>();
         for(Method method:methods){
@@ -44,6 +44,8 @@ public class ControllerBuilder {
                 if(annotation instanceof Get){
                     result.add(method);
                 }
+                else if(annotation instanceof Post)
+                    result.add(method);
             }
         }
         return result;

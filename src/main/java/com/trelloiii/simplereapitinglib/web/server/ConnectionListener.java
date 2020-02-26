@@ -1,19 +1,16 @@
 package com.trelloiii.simplereapitinglib.web.server;
 
-import com.google.gson.Gson;
 import com.trelloiii.simplereapitinglib.Configuration;
+import com.trelloiii.simplereapitinglib.web.Get;
+import com.trelloiii.simplereapitinglib.web.Post;
 import com.trelloiii.simplereapitinglib.web.httpcodes.HttpCode;
-import com.trelloiii.simplereapitinglib.web.httpcodes.NotFound;
-import com.trelloiii.simplereapitinglib.web.httpcodes.Ok;
 import com.trelloiii.simplereapitinglib.web.pool.ControllersPool;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 public class ConnectionListener {
     private ServerSocket serverSocket;
@@ -37,7 +34,7 @@ public class ConnectionListener {
                 Request request = new Request(socket);
                 Map<String,String[]> method=new HashMap<>();
                 try {
-                    method=request.processPath();
+                    method=request.processRequest();
                 }
                 catch (Exception e){
                     e.printStackTrace();
@@ -46,7 +43,14 @@ public class ConnectionListener {
                 HttpCode returned = null;
                 //HttpCode code;
                 for(Map.Entry<String,String[]> entry:method.entrySet()) {
-                    returned=pool.invokeMethod(entry.getKey(), entry.getValue());
+                    String path=entry.getKey().substring(2);
+                    String reqType=entry.getKey().substring(0,1);
+                    System.out.println(path+" ---PATH");
+                    System.out.println(reqType+" ---REQ TYPE");
+                    if(reqType.equals("G"))
+                        returned=pool.invokeMethod(path, Get.class, entry.getValue());
+                    else
+                        returned=pool.invokeMethod(path, Post.class,entry.getValue());//TODO make invoke post and get
                 }
 
                 //TODO upgrade response

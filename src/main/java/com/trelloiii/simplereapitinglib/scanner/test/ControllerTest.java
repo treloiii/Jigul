@@ -2,6 +2,7 @@ package com.trelloiii.simplereapitinglib.scanner.test;
 
 import com.trelloiii.simplereapitinglib.web.Controller;
 import com.trelloiii.simplereapitinglib.web.Get;
+import com.trelloiii.simplereapitinglib.web.Post;
 
 @Controller
 public class ControllerTest {
@@ -10,7 +11,7 @@ public class ControllerTest {
     public Car doNothing(String color,String mark){
         return new Car(mark,color);
     }
-    @Get(path = "/")
+    @Post(path = "/")
     public Car gavno(Car a){
         return a;
     }

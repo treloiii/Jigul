@@ -4,8 +4,10 @@ import com.google.gson.Gson;
 import com.trelloiii.simplereapitinglib.Configuration;
 import com.trelloiii.simplereapitinglib.web.Get;
 import com.trelloiii.simplereapitinglib.web.ControllerBuilder;
+import com.trelloiii.simplereapitinglib.web.Post;
 import com.trelloiii.simplereapitinglib.web.httpcodes.*;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -20,9 +22,9 @@ public class ControllersPool {
         this.controllers=controllerBuilder.getControllers();
     }
 
-    public HttpCode invokeMethod(String methodName, String... params){
+    public HttpCode invokeMethod(String methodName,Class<? extends Annotation> reqType, String... params){
             try{
-                Map<Object,Method> pair=searchMethod(methodName);
+                Map<Object,Method> pair=searchMethod(methodName,reqType);
                 for(Map.Entry<Object,Method> entry:pair.entrySet()){
                     Method invokable=entry.getValue();
                     Object instance=entry.getKey();
@@ -85,16 +87,29 @@ public class ControllersPool {
         return returned;
     }
 
-    private Map<Object,Method> searchMethod(String methodName) throws Exception {
+    private Map<Object,Method> searchMethod(String methodName,Class<? extends Annotation> reqType) throws Exception {
         for(Map.Entry<Object,List<Method>> entry:controllers.entrySet()){
             List<Method> methods=entry.getValue();
-            for(Method method:methods){
-                Get annotation=method.getAnnotation(Get.class);
-                System.out.println(annotation.path());
-                if(annotation.path().equals(methodName)) {
-                    Map<Object,Method> result=new HashMap<>();
-                    result.put(entry.getKey(),method);
-                    return result;
+            for(Method method:methods) {
+                try {
+                    if (reqType == Get.class) {
+                        Get a = method.getAnnotation(Get.class);
+                        if (a.path().equals(methodName)) {
+                            Map<Object, Method> result = new HashMap<>();
+                            result.put(entry.getKey(), method);
+                            return result;
+                        }
+                    } else {
+                        Post a = method.getAnnotation(Post.class);
+                        if (a.path().equals(methodName)) {
+                            Map<Object, Method> result = new HashMap<>();
+                            result.put(entry.getKey(), method);
+                            return result;
+                        }
+                    }
+                }
+                catch (NullPointerException e) {
+                    continue;
                 }
             }
         }
