@@ -1,11 +1,11 @@
 package com.trelloiii.simplereapitinglib.web.httpcodes;
 
-public class NotFound implements HttpCode{
-    private final int CODE=404;
+public class Ok implements HttpCode {
+    private final int CODE=200;
     private Object body;
-    public NotFound(Object body) {
+    public Ok(Object body) {
         this.body=body;
-        System.out.println("page not found");//TODO make normal 404
+        System.out.println("OK");
     }
 
     @Override

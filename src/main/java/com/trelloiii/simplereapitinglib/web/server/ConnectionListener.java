@@ -1,6 +1,10 @@
 package com.trelloiii.simplereapitinglib.web.server;
 
+import com.google.gson.Gson;
 import com.trelloiii.simplereapitinglib.Configuration;
+import com.trelloiii.simplereapitinglib.web.httpcodes.HttpCode;
+import com.trelloiii.simplereapitinglib.web.httpcodes.NotFound;
+import com.trelloiii.simplereapitinglib.web.httpcodes.Ok;
 import com.trelloiii.simplereapitinglib.web.pool.ControllersPool;
 
 import java.io.IOException;
@@ -30,7 +34,6 @@ public class ConnectionListener {
         Socket socket = serverSocket.accept();
         new Thread(()->{
             try {
-                PrintWriter output = new PrintWriter(socket.getOutputStream());
                 Request request = new Request(socket);
                 Map<String,String[]> method=new HashMap<>();
                 try {
@@ -39,24 +42,20 @@ public class ConnectionListener {
                 catch (Exception e){
                     e.printStackTrace();
                 }
-            //    pool.invokeMethod("/doNothing","SUKA","returned");
-                //TODO request controller
+
+                Object returned = null;
+                HttpCode code;
                 for(Map.Entry<String,String[]> entry:method.entrySet()) {
-                    System.out.println(entry.getKey()+"$");
-                    pool.invokeMethod(entry.getKey(), entry.getValue());
+                    returned=pool.invokeMethod(entry.getKey(), entry.getValue());
                 }
-                Random r=new Random();
 
-                Thread.sleep(r.nextInt(500));
-
-
-                //TODO return normal response
-                output.println("HTTP/1.1 200 OK");
-                output.println("Content-Type: text/html; charset=utf-8");
-                output.println();
-                output.println("<p>Привет всем!</p>");
-                output.flush();
-
+                //TODO upgrade response
+                Response response=new Response(socket.getOutputStream());
+                if(returned instanceof NotFound)
+                    code= (HttpCode) returned;
+                else
+                    code=new Ok(returned);
+                response.sendResponse(code);
 
                 socket.close();
                 System.out.println("Client disconnected!");

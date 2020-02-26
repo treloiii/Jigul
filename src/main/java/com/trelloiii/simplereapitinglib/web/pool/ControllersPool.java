@@ -1,5 +1,6 @@
 package com.trelloiii.simplereapitinglib.web.pool;
 
+import com.google.gson.Gson;
 import com.trelloiii.simplereapitinglib.Configuration;
 import com.trelloiii.simplereapitinglib.web.Get;
 import com.trelloiii.simplereapitinglib.web.ControllerBuilder;
@@ -25,45 +26,53 @@ public class ControllersPool {
                 for(Map.Entry<Object,Method> entry:pair.entrySet()){
                     Method invokable=entry.getValue();
                     Object instance=entry.getKey();
-                    System.out.println(Arrays.toString(invokable.getParameterTypes()));
-                    Class<?>[] types=invokable.getParameterTypes();
-                    Object[] invokableParams=convertingTypes(params,types);
-                    return invokable.invoke(instance,invokableParams);
+//                    System.out.println(Arrays.toString(invokable.getParameterTypes()));
+                    if(params!=null) {
+                        Class<?>[] types = invokable.getParameterTypes();
+                        Object[] invokableParams = convertingTypes(params, types);
+                        return invokable.invoke(instance, invokableParams);
+                    }
+                    else{
+                        return invokable.invoke(instance);
+                    }
                 }
-                return new NotFound();
+                return new NotFound(null);//BAD BAD BAD IDK
             }
             catch (Exception e){
                 e.printStackTrace();
-                return new NotFound();
+                return new NotFound(null);
             }
 
     }
 
     private Object[] convertingTypes(String[] params,Class<?>[] types) throws Exception {
         Object[] returned=new Object[params.length];
+        Gson gson=new Gson();
         for(int i=0;i<params.length;i++){
-            if(types[i]==String.class)
-                returned[i]= String.valueOf(params[i]);
-            else if(types[i]==Integer.class)
-                returned[i]= Integer.valueOf(params[i]);
-            else if(types[i]==Short.class)
-                returned[i]= Short.valueOf(params[i]);
-            else if(types[i]==Long.class)
-                returned[i]= Long.valueOf(params[i]);
-            else if(types[i]==Byte.class)
-                returned[i]= Byte.valueOf(params[i]);
-            else if(types[i]==Float.class)
-                returned[i]= Float.valueOf(params[i]);
-            else if(types[i]==Double.class)
-                returned[i]= Double.valueOf(params[i]);
-            else if(types[i]==Character.class) {
-                if(params[i].length()>1)
-                    throw new Exception("Cannot convert string to char");
-                else
-                    returned[i] = params[i].charAt(0);
-            }
-            else if(types[i]==Boolean.class)
-                returned[i]= Boolean.valueOf(params[i]);
+//            if(types[i]==String.class)
+//                returned[i]= String.valueOf(params[i]);
+//            else if(types[i]==Integer.class)
+//                returned[i]= Integer.valueOf(params[i]);
+//            else if(types[i]==Short.class)
+//                returned[i]= Short.valueOf(params[i]);
+//            else if(types[i]==Long.class)
+//                returned[i]= Long.valueOf(params[i]);
+//            else if(types[i]==Byte.class)
+//                returned[i]= Byte.valueOf(params[i]);
+//            else if(types[i]==Float.class)
+//                returned[i]= Float.valueOf(params[i]);
+//            else if(types[i]==Double.class)
+//                returned[i]= Double.valueOf(params[i]);
+//            else if(types[i]==Character.class) {
+//                if(params[i].length()>1)
+//                    throw new Exception("Cannot convert string to char");
+//                else
+//                    returned[i] = params[i].charAt(0);
+//            }
+//            else if(types[i]==Boolean.class)
+//                returned[i]= Boolean.valueOf(params[i]);
+            System.out.println(params[i]);
+            returned[i]=gson.fromJson(params[i],types[i]);
         }
         return returned;
     }

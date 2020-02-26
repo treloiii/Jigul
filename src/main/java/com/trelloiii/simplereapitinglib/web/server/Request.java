@@ -25,18 +25,24 @@ public class Request {
 
             while (!input.ready()) ;
 
-            // считываем и печатаем все что было отправлено клиентом
 
             System.out.println();
-            String pathParams=input.readLine().split(" ")[1];
-            String [] splitted=pathParams.split("[?]");
-            String path=splitted[0];
-            String[] params=splitted[1].split("&");
-            System.out.println(Arrays.toString(processParams(params)));
-            System.out.println(path);
-            Map<String,String[]> result=new HashMap<>();
-            result.put(path,processParams(params));
-            return result;
+            String pathParams = input.readLine().split(" ")[1];
+            String[] splitted = pathParams.split("[?]");
+            String path = splitted[0];
+            Map<String, String[]> result = new HashMap<>();
+            try {// Request with params
+                String[] params = splitted[1].split("&");
+                System.out.println(Arrays.toString(processParams(params)));
+                System.out.println(path);
+                result.put(path, processParams(params));
+                return result;
+            }
+            catch (ArrayIndexOutOfBoundsException e){//request without params
+                System.out.println(path);
+                result.put(path,null);
+                return result;
+            }
         }
         catch (Exception e){
             e.printStackTrace();

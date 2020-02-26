@@ -6,9 +6,12 @@ import com.trelloiii.simplereapitinglib.web.Get;
 @Controller
 public class ControllerTest {
 
-    @Get(path="/doNothing")
-    public String doNothing(Integer s,String returnable){
-        System.out.println(s*20+" JHOPA");
-        return returnable;
+    @Get(path="/test")
+    public Car doNothing(String color,String mark){
+        return new Car(mark,color);
+    }
+    @Get(path = "/")
+    public Car gavno(Car a){
+        return a;
     }
 }

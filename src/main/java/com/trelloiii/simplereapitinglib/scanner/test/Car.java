@@ -23,10 +23,7 @@ public class Car {
         return mark;
     }
 
-    public Car() {
-        this.mark="Mercedes";
-        this.color="Black";
-    }
+
 
     public void setPassenger(Person passenger) {
         this.passenger = passenger;
