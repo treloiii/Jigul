@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.trelloiii.simplereapitinglib.Configuration;
 import com.trelloiii.simplereapitinglib.web.Get;
 import com.trelloiii.simplereapitinglib.web.ControllerBuilder;
-import com.trelloiii.simplereapitinglib.web.httpcodes.NotFound;
+import com.trelloiii.simplereapitinglib.web.httpcodes.*;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -20,7 +20,7 @@ public class ControllersPool {
         this.controllers=controllerBuilder.getControllers();
     }
 
-    public Object invokeMethod(String methodName,String... params){
+    public HttpCode invokeMethod(String methodName, String... params){
             try{
                 Map<Object,Method> pair=searchMethod(methodName);
                 for(Map.Entry<Object,Method> entry:pair.entrySet()){
@@ -30,17 +30,25 @@ public class ControllersPool {
                     if(params!=null) {
                         Class<?>[] types = invokable.getParameterTypes();
                         Object[] invokableParams = convertingTypes(params, types);
-                        return invokable.invoke(instance, invokableParams);
+                        return new Ok(invokable.invoke(instance, invokableParams));
                     }
                     else{
-                        return invokable.invoke(instance);
+                        return new Ok(invokable.invoke(instance));
                     }
                 }
-                return new NotFound(null);//BAD BAD BAD IDK
+                return new NotFound("Page not found");//BAD BAD BAD IDK
             }
-            catch (Exception e){
+            catch (IllegalArgumentException e){
                 e.printStackTrace();
-                return new NotFound(null);
+                return new BadRequest("Bad request. "+ e.getMessage());
+            }
+            catch (NotFoundException e1){
+                e1.printStackTrace();
+                return new NotFound("Page not found");
+            }
+            catch (Exception e2){
+                e2.printStackTrace();
+                return new InternalServerError("Internal server error. "+e2.getCause().toString());
             }
 
     }
@@ -90,6 +98,6 @@ public class ControllersPool {
                 }
             }
         }
-        throw new Exception("Method not found");
+        throw new NotFoundException("Method not found");
     }
 }

@@ -14,4 +14,9 @@ public class ControllerTest {
     public Car gavno(Car a){
         return a;
     }
+
+    @Get(path="/marsel")
+    public Integer getMarsel(){
+        return 5/0;
+    }
 }

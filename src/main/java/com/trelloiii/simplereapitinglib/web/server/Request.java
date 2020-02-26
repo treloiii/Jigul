@@ -26,8 +26,9 @@ public class Request {
             while (!input.ready()) ;
 
 
-            System.out.println();
-            String pathParams = input.readLine().split(" ")[1];
+            String in=input.readLine();
+            System.out.println(in);
+            String pathParams = in.split(" ")[1];
             String[] splitted = pathParams.split("[?]");
             String path = splitted[0];
             Map<String, String[]> result = new HashMap<>();

@@ -43,19 +43,19 @@ public class ConnectionListener {
                     e.printStackTrace();
                 }
 
-                Object returned = null;
-                HttpCode code;
+                HttpCode returned = null;
+                //HttpCode code;
                 for(Map.Entry<String,String[]> entry:method.entrySet()) {
                     returned=pool.invokeMethod(entry.getKey(), entry.getValue());
                 }
 
                 //TODO upgrade response
                 Response response=new Response(socket.getOutputStream());
-                if(returned instanceof NotFound)
-                    code= (HttpCode) returned;
-                else
-                    code=new Ok(returned);
-                response.sendResponse(code);
+//                if(!(returned instanceof Ok))
+//                    code= (HttpCode) returned;
+//                else
+//                    code=new Ok(returned);
+                response.sendResponse(returned);
 
                 socket.close();
                 System.out.println("Client disconnected!");
