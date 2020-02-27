@@ -24,6 +24,6 @@ public class Main {
 //        car.getDriver().voice();
 //        car.pickUpPassenger();
 //        car.beep();
-        Application.start(TestConfig.class);
+       // Application.start(TestConfig.class);
     }
 }

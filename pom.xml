@@ -15,6 +15,9 @@
                 <configuration>
                     <source>8</source>
                     <target>8</target>
+                    <excludes>
+                        <exclude>**/com/trelloiii/simplereapitinglib/scanner/test/*.java</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
         </plugins>
