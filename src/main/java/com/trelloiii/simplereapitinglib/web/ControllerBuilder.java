@@ -9,24 +9,28 @@ import java.util.Map;
 
 public class ControllerBuilder {
     private static ControllerBuilder builder;
-    //private List<Object> controllers;
-    private Map<Object, List<Method>> controllers;
+    private Map<Class<?>,Object> controllers;
+    private Map<String,Method> methods;
     private ControllerBuilder(List<Class<?>> classes){
-        //controllers=new ArrayList<>();
-        controllers =new HashMap<>();
+        controllers=new HashMap<>();
+        methods=new HashMap<>();
         for(Class<?> clazz:classes){
             try {
                 Object controller=clazz.newInstance();
-                controllers.put(controller, scanGetPost(clazz));
-                //controllers.add(controller);
+                controllers.put(clazz,controller);
+                methods.putAll(scanGetPost(clazz));
             } catch (Exception e){
                 e.printStackTrace();
             }
         }
     }
 
-    public Map<Object, List<Method>> getControllers() {
+    public Map<Class<?>, Object> getControllers() {
         return controllers;
+    }
+
+    public Map<String, Method> getMethods() {
+        return methods;
     }
 
     public static ControllerBuilder builder(List<Class<?>> classes){
@@ -35,7 +39,8 @@ public class ControllerBuilder {
         }
         return builder;
     }
-    private List<Method> scanGetPost(Class<?> clazz){
+    @Deprecated
+    private List<Method> scanGetPostOld(Class<?> clazz){
         Method [] methods=clazz.getMethods();
         List<Method> result=new ArrayList<>();
         for(Method method:methods){
@@ -46,6 +51,24 @@ public class ControllerBuilder {
                 }
                 else if(annotation instanceof Post)
                     result.add(method);
+            }
+        }
+        return result;
+    }
+    private Map<String,Method> scanGetPost(Class<?> clazz){
+        Method [] methods=clazz.getMethods();
+        Map<String,Method> result=new HashMap<>();
+        for(Method method:methods){
+            Annotation[] annotations=method.getAnnotations();
+            for(Annotation annotation:annotations){
+                if(annotation instanceof Get){
+                    Get get=(Get) annotation;
+                    result.put(get.path(),method);
+                }
+                else if(annotation instanceof Post) {
+                    Post post = (Post) annotation;
+                    result.put(post.path(), method);
+                }
             }
         }
         return result;

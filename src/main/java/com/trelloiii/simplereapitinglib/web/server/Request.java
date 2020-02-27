@@ -120,7 +120,7 @@ public class Request {
         String result="";
         for(String header:headersList){
             if(header.contains(headerName)){
-                result=header.substring("Content-Length: ".length());
+                result=header.substring(headerName.length()+2);
             }
         }
         return result;

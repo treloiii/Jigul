@@ -16,26 +16,26 @@ import java.util.Map;
 
 public class ControllersPool {
     private ControllerBuilder controllerBuilder;
-    private Map<Object, List<Method>> controllers;
+    private Map<Object, List<Method>> controllers1;
+    private Map<Class<?>,Object> controllers;
+    private Map<String,Method> methods;
     public ControllersPool(Configuration configuration) {
         this.controllerBuilder = configuration.getControllerBuilder();
         this.controllers=controllerBuilder.getControllers();
+        this.methods=controllerBuilder.getMethods();
     }
 
     public HttpCode invokeMethod(String methodName,Class<? extends Annotation> reqType, String... params){
             try{
-                Map<Object,Method> pair=searchMethod(methodName,reqType);
-                for(Map.Entry<Object,Method> entry:pair.entrySet()){
-                    Method invokable=entry.getValue();
-                    Object instance=entry.getKey();
-//                    System.out.println(Arrays.toString(invokable.getParameterTypes()));
-                    if(params!=null) {
+                Method invokable=methods.get(methodName);
+                Object controller=controllers.get(invokable.getDeclaringClass());
+                if(invokable.getAnnotation(reqType)!=null) {
+                    if (params != null) {
                         Class<?>[] types = invokable.getParameterTypes();
                         Object[] invokableParams = convertingTypes(params, types);
-                        return new Ok(invokable.invoke(instance, invokableParams));
-                    }
-                    else{
-                        return new Ok(invokable.invoke(instance));
+                        return new Ok(invokable.invoke(controller, invokableParams));
+                    } else {
+                        return new Ok(invokable.invoke(controller));
                     }
                 }
                 return new NotFound("Page not found");//BAD BAD BAD IDK
@@ -59,36 +59,15 @@ public class ControllersPool {
         Object[] returned=new Object[params.length];
         Gson gson=new Gson();
         for(int i=0;i<params.length;i++){
-//            if(types[i]==String.class)
-//                returned[i]= String.valueOf(params[i]);
-//            else if(types[i]==Integer.class)
-//                returned[i]= Integer.valueOf(params[i]);
-//            else if(types[i]==Short.class)
-//                returned[i]= Short.valueOf(params[i]);
-//            else if(types[i]==Long.class)
-//                returned[i]= Long.valueOf(params[i]);
-//            else if(types[i]==Byte.class)
-//                returned[i]= Byte.valueOf(params[i]);
-//            else if(types[i]==Float.class)
-//                returned[i]= Float.valueOf(params[i]);
-//            else if(types[i]==Double.class)
-//                returned[i]= Double.valueOf(params[i]);
-//            else if(types[i]==Character.class) {
-//                if(params[i].length()>1)
-//                    throw new Exception("Cannot convert string to char");
-//                else
-//                    returned[i] = params[i].charAt(0);
-//            }
-//            else if(types[i]==Boolean.class)
-//                returned[i]= Boolean.valueOf(params[i]);
             System.out.println(params[i]);
             returned[i]=gson.fromJson(params[i],types[i]);
         }
         return returned;
     }
 
+    @Deprecated
     private Map<Object,Method> searchMethod(String methodName,Class<? extends Annotation> reqType) throws Exception {
-        for(Map.Entry<Object,List<Method>> entry:controllers.entrySet()){
+        for(Map.Entry<Object,List<Method>> entry:controllers1.entrySet()){
             List<Method> methods=entry.getValue();
             for(Method method:methods) {
                 try {
