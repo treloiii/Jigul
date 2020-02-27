@@ -79,7 +79,7 @@ public class Configuration {
                 e.printStackTrace();
             }
         }
-        this.controllerBuilder=ControllerBuilder.builder(classes);
+        this.controllerBuilder=ControllerBuilder.builder(classes,objectInstance);
     }
 
     @Deprecated

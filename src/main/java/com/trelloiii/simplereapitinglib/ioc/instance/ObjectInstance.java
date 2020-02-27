@@ -19,9 +19,10 @@ public class ObjectInstance {
     public static ObjectInstance builder(List<Class<?>> classes){
         if(objectInstance==null){
             objectInstance=new ObjectInstance(classes);
+            fieldInstance=new FieldInstance(objectInstance);
+            fieldInstance.injectToSingleInstances();
         }
-        fieldInstance=new FieldInstance(objectInstance);
-        fieldInstance.injectToSingleInstances();
+
         return objectInstance;
     }
 

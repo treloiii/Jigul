@@ -1,17 +1,21 @@
 package com.trelloiii.simplereapitinglib.scanner.test;
 
+import com.trelloiii.simplereapitinglib.Configuration;
+import com.trelloiii.simplereapitinglib.ioc.Injectable;
+import com.trelloiii.simplereapitinglib.ioc.pool.ObjectPool;
 import com.trelloiii.simplereapitinglib.web.*;
 
 @Controller
 public class ControllerTest {
-
+    @Injectable
+    Car car;
     @Get(path="/test")
     public Car doNothing(@RequestParam(name="color") String color, @RequestParam(name="mark") String mark){
         return new Car(mark,color);
     }
     @Post(path = "/")
-    public Car gavno(@RequestBody Car a){
-        return a;
+    public Car gavno(@RequestBody Car a) throws InstantiationException {
+        return car;
     }
 
     @Post(path="/query")

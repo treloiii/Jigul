@@ -1,5 +1,7 @@
 package com.trelloiii.simplereapitinglib.web;
 
+import com.trelloiii.simplereapitinglib.ioc.instance.FieldInstance;
+import com.trelloiii.simplereapitinglib.ioc.instance.ObjectInstance;
 import com.trelloiii.simplereapitinglib.web.server.Request;
 
 import java.lang.annotation.Annotation;
@@ -13,13 +15,16 @@ public class ControllerBuilder {
     private static ControllerBuilder builder;
     private Map<Class<?>,Object> controllers;
     private Map<String,Method> methods;
-    private ControllerBuilder(List<Class<?>> classes){
+    private ControllerBuilder(List<Class<?>> classes,ObjectInstance objectInstance){
         controllers=new HashMap<>();
         methods=new HashMap<>();
         for(Class<?> clazz:classes){
             try {
                 Object controller=clazz.newInstance();
                 controllers.put(clazz,controller);
+                //TODO init Injectable
+                FieldInstance fieldInstance=new FieldInstance(objectInstance);
+                fieldInstance.fieldInstance(controller,clazz);
                 methods.putAll(scanGetPost(clazz));
             } catch (Exception e){
                 e.printStackTrace();
@@ -35,9 +40,9 @@ public class ControllerBuilder {
         return methods;
     }
 
-    public static ControllerBuilder builder(List<Class<?>> classes){
+    public static ControllerBuilder builder(List<Class<?>> classes,ObjectInstance objectInstance){
         if(builder==null){
-            builder=new ControllerBuilder(classes);
+            builder=new ControllerBuilder(classes,objectInstance);
         }
         return builder;
     }

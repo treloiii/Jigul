@@ -1,6 +1,8 @@
 package com.trelloiii.simplereapitinglib;
 
 import com.google.gson.Gson;
+import com.trelloiii.simplereapitinglib.ioc.pool.ObjectPool;
+import com.trelloiii.simplereapitinglib.scanner.test.Car;
 import com.trelloiii.simplereapitinglib.web.pool.ControllersPool;
 import com.trelloiii.simplereapitinglib.web.server.ConnectionListener;
 

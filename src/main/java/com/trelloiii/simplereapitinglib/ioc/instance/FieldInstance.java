@@ -1,6 +1,7 @@
 package com.trelloiii.simplereapitinglib.ioc.instance;
 
 import com.trelloiii.simplereapitinglib.ioc.Injectable;
+import com.trelloiii.simplereapitinglib.web.ControllerBuilder;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -8,9 +9,13 @@ import java.util.HashMap;
 import java.util.Map;
 public class FieldInstance {
     private ObjectInstance objectInstance;
+    private ControllerBuilder controllerBuilder;
 
     public FieldInstance(ObjectInstance objectInstance) {
         this.objectInstance = objectInstance;
+    }
+    public FieldInstance(ControllerBuilder controllerBuilder) {
+        this.controllerBuilder = controllerBuilder;
     }
 
     public void injectToSingleInstances(){
@@ -42,7 +47,7 @@ public class FieldInstance {
                 if(annotation instanceof Injectable){
                     try {
                         field.setAccessible(true);
-                        field.set(o,objectInstance.getInstance(field.getType()));
+                            field.set(o,objectInstance.getInstance(field.getType()));//o1 - which is injectable, o- who need instance of field
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
                     }

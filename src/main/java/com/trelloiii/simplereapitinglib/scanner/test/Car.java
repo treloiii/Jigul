@@ -22,7 +22,10 @@ public class Car {
     public String getMark() {
         return mark;
     }
-
+    public Car(){
+        this.mark="suka";
+        this.color="shit";
+    }
 
 
     public void setPassenger(Person passenger) {
