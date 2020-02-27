@@ -24,7 +24,7 @@ public class Request {
 
 
 
-    public Map<String,String[]> processRequest(){//return map String - controller method name, String[] - params for method
+    public Map<String,Map<String,String>> processRequest(){//return map String - controller method name, String[] - params for method
         try{
 
             while (!input.ready()) ;
@@ -60,15 +60,15 @@ public class Request {
         }
     }
 
-    private Map<String,String[]> processGet(List<String> headersList){
+    private Map<String,Map<String,String>> processGet(List<String> headersList){
 
         String[] splitted = processPath(headersList.get(0));
         String path=splitted[0];
-        Map<String, String[]> result = new HashMap<>();
+        Map<String, Map<String,String>> result = new HashMap<>();
         try {// Request with params
             String[] params = splitted[1].split("&");
-            System.out.println(Arrays.toString(processParams(params)));
-            System.out.println(path);
+//            System.out.println(Arrays.toString(processParams(params)));
+//            System.out.println(path);
             result.put("G "+path, processParams(params));//G- mean that it GET request
             return result;
         }
@@ -78,17 +78,20 @@ public class Request {
             return result;
         }
     }
-    private Map<String,String[]> processFormPost(List<String> headersList){
+    private Map<String,Map<String,String>> processFormPost(List<String> headersList){
         try {
-            Map<String,String[]> result=new HashMap<>();
+            Map<String,Map<String,String>> result=new HashMap<>();
             String path=processPath(headersList.get(0))[0];
             String body=parseBody(headersList);//post body
             String[] splitted=body.split("\\r?\\n");//split by new line
-            List<String> vals=new ArrayList<>();//values of request body params
+            Map<String,String> vals=new HashMap<>();//values of request body params
+            System.out.println(Arrays.toString(splitted));
             for(int i=3;i<splitted.length-1;i+=4){
-                vals.add(splitted[i]);//add only values of request body params
+                String bufName=splitted[i-2];
+                String name=bufName.substring("Content-Disposition: form-data; name=\"".length(),bufName.length()-1);
+                vals.put(name,splitted[i]);//add only values of request body params
             }
-            result.put("P "+path,vals.toArray(new String[0]));//P - mean that it POST request
+            result.put("P "+path,vals);//P - mean that it POST request
             return result;
         }
         catch (Exception e){
@@ -96,12 +99,14 @@ public class Request {
             return null;// i don't know what need to go in this catch
         }
     }
-    private Map<String,String[]> processRawPost(List<String> headersList){
+    private Map<String,Map<String,String>> processRawPost(List<String> headersList){
         try{
-            Map<String,String[]> result=new HashMap<>();
+            Map<String,Map<String,String>> result=new HashMap<>();
             String path=processPath(headersList.get(0))[0];
             String body=parseBody(headersList);
-            result.put("P "+path,new String[]{body});//P - mean that it POST request
+            Map<String,String> vals=new HashMap<>();
+            vals.put("BODY",body);
+            result.put("P "+path,vals);//P - mean that it POST request
             return result;
         }
         catch (Exception e){
@@ -131,11 +136,13 @@ public class Request {
         input.read(buf);//Read body
         return String.valueOf(buf);
     }
-    private String[] processParams(String[] params){
-        List<String> result=new ArrayList<>();
+    private Map<String,String> processParams(String[] params){//first-param name, second param value
+        Map<String,String> result=new HashMap<>();
         for(String param:params){
-            result.add(param.split("=")[1]);
+            System.out.println(param+" &&");
+            String[] bufArr=param.split("=");
+            result.put(bufArr[0],bufArr[1]);
         }
-        return result.toArray(new String[0]);
+        return result;
     }
 }

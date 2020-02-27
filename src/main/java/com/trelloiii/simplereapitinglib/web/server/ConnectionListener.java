@@ -32,7 +32,7 @@ public class ConnectionListener {
         new Thread(()->{
             try {
                 Request request = new Request(socket);
-                Map<String,String[]> method=new HashMap<>();
+                Map<String,Map<String,String>> method=new HashMap<>();
                 try {
                     method=request.processRequest();
                 }
@@ -42,7 +42,7 @@ public class ConnectionListener {
 
                 HttpCode returned = null;
                 //HttpCode code;
-                for(Map.Entry<String,String[]> entry:method.entrySet()) {
+                for(Map.Entry<String,Map<String,String>> entry:method.entrySet()) {
                     String path=entry.getKey().substring(2);
                     String reqType=entry.getKey().substring(0,1);
                     System.out.println(path+" ---PATH");

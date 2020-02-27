@@ -5,14 +5,13 @@ import com.trelloiii.simplereapitinglib.Configuration;
 import com.trelloiii.simplereapitinglib.web.Get;
 import com.trelloiii.simplereapitinglib.web.ControllerBuilder;
 import com.trelloiii.simplereapitinglib.web.Post;
+import com.trelloiii.simplereapitinglib.web.RequestParam;
 import com.trelloiii.simplereapitinglib.web.httpcodes.*;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.Parameter;
+import java.util.*;
 
 public class ControllersPool {
     private ControllerBuilder controllerBuilder;
@@ -25,17 +24,24 @@ public class ControllersPool {
         this.methods=controllerBuilder.getMethods();
     }
 
-    public HttpCode invokeMethod(String methodName,Class<? extends Annotation> reqType, String... params){
+    public HttpCode invokeMethod(String methodName,Class<? extends Annotation> reqType, Map<String,String> params){
             try{
                 Method invokable=methods.get(methodName);
-                Object controller=controllers.get(invokable.getDeclaringClass());
-                if(invokable.getAnnotation(reqType)!=null) {
-                    if (params != null) {
-                        Class<?>[] types = invokable.getParameterTypes();
-                        Object[] invokableParams = convertingTypes(params, types);
-                        return new Ok(invokable.invoke(controller, invokableParams));
-                    } else {
-                        return new Ok(invokable.invoke(controller));
+                if(invokable!=null) {
+                    Object controller=controllers.get(invokable.getDeclaringClass());
+                    System.out.println("SSSSSSSSSSSSSSS");
+                    if (invokable.getAnnotation(reqType) != null) {
+                        if (params != null) {
+                            Parameter[] parameters=invokable.getParameters();
+                            String[] invokingParams=sotParams(parameters,params);
+                            if(invokingParams==null)
+                                return new BadRequest("Bad request. Wrong parameters name are provided");
+                            Class<?>[] types = invokable.getParameterTypes();
+                            Object[] invokableParams = convertingTypes(invokingParams, types);
+                            return new Ok(invokable.invoke(controller, invokableParams));
+                        } else {
+                            return new Ok(invokable.invoke(controller));
+                        }
                     }
                 }
                 return new NotFound("Page not found");//BAD BAD BAD IDK
@@ -55,6 +61,30 @@ public class ControllersPool {
 
     }
 
+
+    private String[] sotParams(Parameter[] parameters,Map<String,String> params){
+        List<String> rightParamsOrderByName=new ArrayList<>();
+        String[] valuesResult=new String[parameters.length];
+        int i=0;
+        for(Parameter parameter:parameters){
+            RequestParam param=parameter.getAnnotation(RequestParam.class);
+            if(param==null)//IF @RequestBody presented
+                break;
+            rightParamsOrderByName.add(param.name());
+            i++;
+        }
+        for(Map.Entry<String,String> entry:params.entrySet()){
+            if(rightParamsOrderByName.size()==0) {// IF @RequestBody presented
+                valuesResult[0] = entry.getValue();
+                break;
+            }
+            int index=rightParamsOrderByName.indexOf(entry.getKey());
+            if(index==-1)//Wrong name of parameter in request
+                return null;
+            valuesResult[index]=entry.getValue();
+        }
+        return valuesResult;
+    }
     private Object[] convertingTypes(String[] params,Class<?>[] types) throws Exception {
         Object[] returned=new Object[params.length];
         Gson gson=new Gson();
