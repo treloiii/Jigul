@@ -13,8 +13,9 @@ public class ControllerTest {
     public Car doNothing(@RequestParam(name="color") String color, @RequestParam(name="mark") String mark){
         return new Car(mark,color);
     }
-    @Post(path = "/")
-    public Car gavno(@RequestBody Car a) throws InstantiationException {
+    @Get(path = "/")
+    @CrossOrigin()
+    public Car gavno() throws InstantiationException {
         return car;
     }
 

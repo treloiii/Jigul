@@ -5,7 +5,7 @@ public class NotFound extends HttpCode{
 //    private Object body;
     public NotFound(Object body) {
         super(404,body);
-        System.out.println("page not found");//TODO make normal 404
+        System.out.println("page not found");
     }
 
 //    @Override

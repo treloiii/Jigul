@@ -22,7 +22,6 @@ public class ControllerBuilder {
             try {
                 Object controller=clazz.newInstance();
                 controllers.put(clazz,controller);
-                //TODO init Injectable
                 FieldInstance fieldInstance=new FieldInstance(objectInstance);
                 fieldInstance.fieldInstance(controller,clazz);
                 methods.putAll(scanGetPost(clazz));

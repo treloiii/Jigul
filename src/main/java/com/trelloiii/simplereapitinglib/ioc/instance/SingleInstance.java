@@ -1,8 +1,10 @@
 package com.trelloiii.simplereapitinglib.ioc.instance;
 
+import com.trelloiii.simplereapitinglib.scanner.AnnotationScanner;
+
 import java.util.HashMap;
 
-public class SingleInstance  {
+public class SingleInstance extends AnnotationScanner {
 
     private HashMap<Class,Object> singleObjects;
     private static SingleInstance singleInstance;

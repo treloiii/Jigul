@@ -2,10 +2,7 @@ package com.trelloiii.simplereapitinglib.web.pool;
 
 import com.google.gson.Gson;
 import com.trelloiii.simplereapitinglib.Configuration;
-import com.trelloiii.simplereapitinglib.web.Get;
-import com.trelloiii.simplereapitinglib.web.ControllerBuilder;
-import com.trelloiii.simplereapitinglib.web.Post;
-import com.trelloiii.simplereapitinglib.web.RequestParam;
+import com.trelloiii.simplereapitinglib.web.*;
 import com.trelloiii.simplereapitinglib.web.httpcodes.*;
 
 import java.lang.annotation.Annotation;
@@ -61,6 +58,14 @@ public class ControllersPool {
 
     }
 
+    public String getCorsPolicy(String methodName){
+        Method checked=methods.get(methodName);
+        CrossOrigin cors=checked.getAnnotation(CrossOrigin.class);
+        if(cors==null)
+            return null;
+        else
+            return cors.domain();
+    }
 
     private String[] sotParams(Parameter[] parameters,Map<String,String> params){
         List<String> rightParamsOrderByName=new ArrayList<>();

@@ -42,24 +42,19 @@ public class ConnectionListener {
 
                 HttpCode returned = null;
                 //HttpCode code;
+                String corsPolicy=null;
                 for(Map.Entry<String,Map<String,String>> entry:method.entrySet()) {
                     String path=entry.getKey().substring(2);
                     String reqType=entry.getKey().substring(0,1);
-                    System.out.println(path+" ---PATH");
-                    System.out.println(reqType+" ---REQ TYPE");
                     if(reqType.equals("G"))
                         returned=pool.invokeMethod(path, Get.class, entry.getValue());
                     else
-                        returned=pool.invokeMethod(path, Post.class,entry.getValue());//TODO make invoke post and get
+                        returned=pool.invokeMethod(path, Post.class,entry.getValue());
+                    corsPolicy=pool.getCorsPolicy(path);
                 }
 
-                //TODO upgrade response
                 Response response=new Response(socket.getOutputStream());
-//                if(!(returned instanceof Ok))
-//                    code= (HttpCode) returned;
-//                else
-//                    code=new Ok(returned);
-                response.sendResponse(returned);
+                response.sendResponse(returned,corsPolicy);
 
                 socket.close();
                 System.out.println("Client disconnected!");
