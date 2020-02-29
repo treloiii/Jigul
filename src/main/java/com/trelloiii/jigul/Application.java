@@ -1,14 +1,6 @@
-package com.trelloiii.simplereapitinglib;
+package com.trelloiii.jigul;
 
-import com.google.gson.Gson;
-import com.trelloiii.simplereapitinglib.ioc.pool.ObjectPool;
-import com.trelloiii.simplereapitinglib.scanner.test.Car;
-import com.trelloiii.simplereapitinglib.web.pool.ControllersPool;
-import com.trelloiii.simplereapitinglib.web.server.ConnectionListener;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import com.trelloiii.jigul.web.server.ConnectionListener;
 
 public class Application {
     public static void start(Class<?> configurationClass){

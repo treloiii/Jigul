@@ -1,6 +1,6 @@
-package com.trelloiii.simplereapitinglib.ioc.instance;
+package com.trelloiii.jigul.ioc.instance;
 
-import com.trelloiii.simplereapitinglib.scanner.AnnotationScanner;
+import com.trelloiii.jigul.scanner.AnnotationScanner;
 
 import java.util.HashMap;
 

@@ -1,4 +1,4 @@
-package com.trelloiii.simplereapitinglib.web.httpcodes;
+package com.trelloiii.jigul.web.httpcodes;
 
 public class Ok extends HttpCode {
 //    private final int CODE=200;

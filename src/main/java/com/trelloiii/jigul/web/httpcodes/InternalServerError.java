@@ -1,4 +1,4 @@
-package com.trelloiii.simplereapitinglib.web.httpcodes;
+package com.trelloiii.jigul.web.httpcodes;
 
 public class InternalServerError extends HttpCode {
     public InternalServerError(Object body) {

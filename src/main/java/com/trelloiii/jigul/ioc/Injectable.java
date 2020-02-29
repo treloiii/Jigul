@@ -1,4 +1,4 @@
-package com.trelloiii.simplereapitinglib.ioc;
+package com.trelloiii.jigul.ioc;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,7 +1,7 @@
-package com.trelloiii.simplereapitinglib.ioc.instance;
+package com.trelloiii.jigul.ioc.instance;
 
-import com.trelloiii.simplereapitinglib.ioc.Injectable;
-import com.trelloiii.simplereapitinglib.web.ControllerBuilder;
+import com.trelloiii.jigul.ioc.Injectable;
+import com.trelloiii.jigul.web.ControllerBuilder;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;

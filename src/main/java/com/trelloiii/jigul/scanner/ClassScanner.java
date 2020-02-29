@@ -1,4 +1,4 @@
-package com.trelloiii.simplereapitinglib.scanner;
+package com.trelloiii.jigul.scanner;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;

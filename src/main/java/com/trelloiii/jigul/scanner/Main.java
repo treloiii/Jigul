@@ -1,6 +1,6 @@
-package com.trelloiii.simplereapitinglib.scanner;
-import com.trelloiii.simplereapitinglib.Application;
-import com.trelloiii.simplereapitinglib.scanner.test.TestConfig;
+package com.trelloiii.jigul.scanner;
+import com.trelloiii.jigul.Application;
+import com.trelloiii.jigul.scanner.test.TestConfig;
 
 public class Main {
     public static void main(String[] args){

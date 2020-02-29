@@ -1,4 +1,4 @@
-package com.trelloiii.simplereapitinglib.ioc.instance;
+package com.trelloiii.jigul.ioc.instance;
 
 public class InstanceType {
     public final static String SINGLE="Single";

@@ -1,6 +1,6 @@
-package com.trelloiii.simplereapitinglib.ioc;
+package com.trelloiii.jigul.ioc;
 
-import com.trelloiii.simplereapitinglib.ioc.instance.InstanceType;
+import com.trelloiii.jigul.ioc.instance.InstanceType;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,4 +1,4 @@
-package com.trelloiii.simplereapitinglib.web.server;
+package com.trelloiii.jigul.web.server;
 
 public class RequestProcessor {
 }

@@ -1,4 +1,4 @@
-package com.trelloiii.simplereapitinglib.scanner.test;
+package com.trelloiii.jigul.scanner.test;
 
 public class Marsel {
     private String nickname="enslerman";

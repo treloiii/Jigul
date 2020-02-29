@@ -1,9 +1,7 @@
-package com.trelloiii.simplereapitinglib.scanner.test;
+package com.trelloiii.jigul.scanner.test;
 
-import com.trelloiii.simplereapitinglib.Configuration;
-import com.trelloiii.simplereapitinglib.ioc.Injectable;
-import com.trelloiii.simplereapitinglib.ioc.pool.ObjectPool;
-import com.trelloiii.simplereapitinglib.web.*;
+import com.trelloiii.jigul.ioc.Injectable;
+import com.trelloiii.jigul.web.*;
 
 @Controller
 public class ControllerTest {

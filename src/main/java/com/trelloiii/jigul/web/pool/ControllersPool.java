@@ -1,9 +1,9 @@
-package com.trelloiii.simplereapitinglib.web.pool;
+package com.trelloiii.jigul.web.pool;
 
 import com.google.gson.Gson;
-import com.trelloiii.simplereapitinglib.Configuration;
-import com.trelloiii.simplereapitinglib.web.*;
-import com.trelloiii.simplereapitinglib.web.httpcodes.*;
+import com.trelloiii.jigul.Configuration;
+import com.trelloiii.jigul.web.*;
+import com.trelloiii.jigul.web.httpcodes.*;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

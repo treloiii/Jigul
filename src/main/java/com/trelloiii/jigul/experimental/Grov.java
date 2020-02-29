@@ -1,4 +1,4 @@
-package com.trelloiii.simplereapitinglib.experimental;
+package com.trelloiii.jigul.experimental;
 
 import org.codehaus.groovy.transform.GroovyASTTransformationClass;
 

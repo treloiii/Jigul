@@ -1,7 +1,7 @@
-package com.trelloiii.simplereapitinglib.web.server;
+package com.trelloiii.jigul.web.server;
 
 import com.google.gson.Gson;
-import com.trelloiii.simplereapitinglib.web.httpcodes.HttpCode;
+import com.trelloiii.jigul.web.httpcodes.HttpCode;
 
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;

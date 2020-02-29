@@ -1,10 +1,10 @@
-package com.trelloiii.simplereapitinglib.web.server;
+package com.trelloiii.jigul.web.server;
 
-import com.trelloiii.simplereapitinglib.Configuration;
-import com.trelloiii.simplereapitinglib.web.Get;
-import com.trelloiii.simplereapitinglib.web.Post;
-import com.trelloiii.simplereapitinglib.web.httpcodes.HttpCode;
-import com.trelloiii.simplereapitinglib.web.pool.ControllersPool;
+import com.trelloiii.jigul.Configuration;
+import com.trelloiii.jigul.web.Get;
+import com.trelloiii.jigul.web.Post;
+import com.trelloiii.jigul.web.httpcodes.HttpCode;
+import com.trelloiii.jigul.web.pool.ControllersPool;
 
 import java.io.IOException;
 import java.net.ServerSocket;

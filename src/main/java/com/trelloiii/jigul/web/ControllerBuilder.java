@@ -1,8 +1,7 @@
-package com.trelloiii.simplereapitinglib.web;
+package com.trelloiii.jigul.web;
 
-import com.trelloiii.simplereapitinglib.ioc.instance.FieldInstance;
-import com.trelloiii.simplereapitinglib.ioc.instance.ObjectInstance;
-import com.trelloiii.simplereapitinglib.web.server.Request;
+import com.trelloiii.jigul.ioc.instance.FieldInstance;
+import com.trelloiii.jigul.ioc.instance.ObjectInstance;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

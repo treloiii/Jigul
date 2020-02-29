@@ -1,9 +1,9 @@
-package com.trelloiii.simplereapitinglib;
+package com.trelloiii.jigul;
 
-import com.trelloiii.simplereapitinglib.ioc.instance.ObjectInstance;
-import com.trelloiii.simplereapitinglib.scanner.AnnotationScanner;
-import com.trelloiii.simplereapitinglib.scanner.ClassScanner;
-import com.trelloiii.simplereapitinglib.web.ControllerBuilder;
+import com.trelloiii.jigul.ioc.instance.ObjectInstance;
+import com.trelloiii.jigul.scanner.AnnotationScanner;
+import com.trelloiii.jigul.scanner.ClassScanner;
+import com.trelloiii.jigul.web.ControllerBuilder;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
