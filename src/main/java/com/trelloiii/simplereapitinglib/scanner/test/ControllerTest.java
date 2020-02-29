@@ -14,7 +14,7 @@ public class ControllerTest {
         return new Car(mark,color);
     }
     @Get(path = "/")
-    @CrossOrigin()
+    @CrossOrigin
     public Car gavno() throws InstantiationException {
         return car;
     }
