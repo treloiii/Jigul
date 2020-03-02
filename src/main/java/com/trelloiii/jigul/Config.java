@@ -10,4 +10,5 @@ import java.lang.annotation.Target;
 public @interface Config {
     String[] iocPackage();
     String[] webPackage();
+    int serverPort() default 8080;
 }
