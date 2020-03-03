@@ -3,6 +3,7 @@ package com.trelloiii.jigul.web.server;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -84,6 +85,9 @@ public class Request {
             String path=processPath(headersList.get(0))[0];
             String body=parseBody(headersList);//post body
             String[] splitted=body.split("\\r?\\n");//split by new line
+            List<String> buf=new LinkedList<>(Arrays.asList(splitted));//migrate to list for removing
+            buf.removeIf(buf1 -> buf1.contains("Content-Length"));//remove content length string
+            splitted=buf.toArray(new String[]{});//back to array
             Map<String,String> vals=new HashMap<>();//values of request body params
             System.out.println(Arrays.toString(splitted));
             for(int i=3;i<splitted.length-1;i+=4){
