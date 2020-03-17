@@ -18,15 +18,17 @@ public class Configuration {
     private ObjectInstance objectInstance;
     private ControllerBuilder controllerBuilder;
     private static Configuration configuration;
-    private Configuration(String[] IoCPackages,String[] webPackages) {
+    private Class<?> configClass;
+    private Configuration(String[] IoCPackages,String[] webPackages,Class<?> configClass) {
         this.IoCPackages = IoCPackages;
         this.webPackages=webPackages;
+        this.configClass=configClass;
         this.objectsPoolBuilder();
         this.controllersBuilder();
     }
-    public static Configuration build(String [] packages,String[] webPackages){
+    public static Configuration build(String [] packages,String[] webPackages,Class<?> configClass){
         if(configuration==null){
-            configuration=new Configuration(packages,webPackages);
+            configuration=new Configuration(packages,webPackages,configClass);
         }
         return configuration;
     }
@@ -64,7 +66,13 @@ public class Configuration {
             }
         }
 
-        this.objectInstance=ObjectInstance.builder(classes);
+        try {
+            this.objectInstance=ObjectInstance.builder(classes,annotationScanner.scanBean(configClass),configClass.newInstance());
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
     private void controllersBuilder(){
         ClassScanner scanner=ClassScanner.createScanner();

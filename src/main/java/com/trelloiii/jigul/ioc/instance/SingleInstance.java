@@ -38,4 +38,21 @@ public class SingleInstance extends AnnotationScanner {
             return singleObjects.get(clazz);
         }
     }
+
+    public Object instance(Object bean){
+        Class clazz=bean.getClass();
+        if(!singleObjects.containsKey(clazz)){
+            try{
+                singleObjects.put(clazz,bean);
+                return bean;
+            }
+            catch (Exception e){
+                e.printStackTrace();
+                return null;
+            }
+        }
+        else{
+            return singleObjects.get(clazz);
+        }
+    }
 }

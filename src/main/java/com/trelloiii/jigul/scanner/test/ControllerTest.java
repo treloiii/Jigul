@@ -1,6 +1,8 @@
 package com.trelloiii.jigul.scanner.test;
 
+import com.trelloiii.jigul.Configuration;
 import com.trelloiii.jigul.ioc.Injectable;
+import com.trelloiii.jigul.ioc.pool.ObjectPool;
 import com.trelloiii.jigul.web.*;
 
 @Controller
@@ -9,12 +11,13 @@ public class ControllerTest {
     Car car;
     @Get(path="/test")
     public Car doNothing(@RequestParam(name="color") String color, @RequestParam(name="mark") String mark){
-        return new Car(mark,color);
+        return car;
     }
     @Get(path = "/")
     @CrossOrigin
-    public Car gavno() throws InstantiationException {
-        return car;
+    public Person gavno() throws InstantiationException {
+        ObjectPool pool=new ObjectPool(Configuration.getConfiguration());
+        return pool.getPooledObject(Person.class);
     }
 
     @Post(path="/query")
@@ -25,4 +28,5 @@ public class ControllerTest {
     public Integer getMarsel(){
         return 5/0;
     }
+
 }
