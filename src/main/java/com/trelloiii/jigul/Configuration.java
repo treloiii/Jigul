@@ -1,7 +1,7 @@
 package com.trelloiii.jigul;
 
 import com.trelloiii.jigul.ioc.instance.ObjectInstance;
-import com.trelloiii.jigul.json.Bean;
+import com.trelloiii.jigul.parser.Bean;
 import com.trelloiii.jigul.scanner.AnnotationScanner;
 import com.trelloiii.jigul.scanner.ClassScanner;
 import com.trelloiii.jigul.web.ControllerBuilder;

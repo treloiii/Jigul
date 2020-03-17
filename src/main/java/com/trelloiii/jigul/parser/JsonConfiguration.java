@@ -1,4 +1,4 @@
-package com.trelloiii.jigul.json;
+package com.trelloiii.jigul.parser;
 
 import java.util.Arrays;
 
