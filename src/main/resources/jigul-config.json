@@ -1,0 +1,19 @@
+{
+  "configuration": {
+    "webPackages": [
+      "com.trelloiii.jigul.scanner.test"
+    ],
+    "iocPackages": [
+      "com.trelloiii.jigul.scanner.test"
+    ],
+    "serverPort": 8080
+  },
+  "beans": [
+    {
+      "classPath": "com.trelloiii.jigul.scanner.test.Person",
+      "constructorArgs": ["json person bean","yes json person"],
+      "constructorTypes": ["java.lang.String","java.lang.String"],
+      "instanceType": "Multi"
+    }
+  ]
+}

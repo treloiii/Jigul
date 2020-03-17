@@ -1,6 +1,7 @@
 package com.trelloiii.jigul;
 
 import com.trelloiii.jigul.ioc.instance.ObjectInstance;
+import com.trelloiii.jigul.json.Bean;
 import com.trelloiii.jigul.scanner.AnnotationScanner;
 import com.trelloiii.jigul.scanner.ClassScanner;
 import com.trelloiii.jigul.web.ControllerBuilder;
@@ -19,10 +20,20 @@ public class Configuration {
     private ControllerBuilder controllerBuilder;
     private static Configuration configuration;
     private Class<?> configClass;
+    private List<Bean> beans;
     private Configuration(String[] IoCPackages,String[] webPackages,Class<?> configClass) {
         this.IoCPackages = IoCPackages;
         this.webPackages=webPackages;
         this.configClass=configClass;
+        this.objectsPoolBuilder();
+        this.controllersBuilder();
+    }
+
+    private Configuration(String[] IoCPackages,String[] webPackages,List<Bean> beans) {
+        this.IoCPackages = IoCPackages;
+        this.webPackages=webPackages;
+//        this.configClass=configClass;
+        this.beans=beans;
         this.objectsPoolBuilder();
         this.controllersBuilder();
     }
@@ -32,6 +43,13 @@ public class Configuration {
         }
         return configuration;
     }
+    public static Configuration build(String [] packages, String[] webPackages, List<Bean> beans){
+        if(configuration==null){
+            configuration=new Configuration(packages,webPackages,beans);
+        }
+        return configuration;
+    }
+
     public static Configuration getConfiguration() throws InstantiationException {
         if(configuration==null)
             throw new InstantiationException("There is no setup configuration in your project, cannot instance null config");
@@ -67,7 +85,12 @@ public class Configuration {
         }
 
         try {
-            this.objectInstance=ObjectInstance.builder(classes,annotationScanner.scanBean(configClass),configClass.newInstance());
+            if(configClass!=null) {
+                this.objectInstance = ObjectInstance.builder(classes, annotationScanner.scanBean(configClass), configClass.newInstance());
+            }
+            else{
+                this.objectInstance = ObjectInstance.builder(classes,beans);
+            }
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
