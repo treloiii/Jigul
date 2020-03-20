@@ -1,7 +1,7 @@
 package com.trelloiii.jigul.ioc.instance;
 
 import com.trelloiii.jigul.ioc.Injectable;
-import com.trelloiii.jigul.web.ControllerBuilder;
+import com.trelloiii.jigul.web.rest.ControllerBuilder;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;

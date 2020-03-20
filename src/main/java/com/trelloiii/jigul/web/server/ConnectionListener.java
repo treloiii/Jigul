@@ -4,7 +4,7 @@ import com.trelloiii.jigul.Configuration;
 import com.trelloiii.jigul.web.Get;
 import com.trelloiii.jigul.web.Post;
 import com.trelloiii.jigul.web.httpcodes.HttpCode;
-import com.trelloiii.jigul.web.pool.ControllersPool;
+import com.trelloiii.jigul.web.rest.ControllersPool;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -31,7 +31,7 @@ public class ConnectionListener {
         Socket socket = serverSocket.accept();
         new Thread(()->{
             try {
-                Request request = new Request(socket);
+                Request request = new Request(socket);//TODO переделать Request чтоб хранить в нем обработтаный запрос
                 Map<String,Map<String,String>> method=new HashMap<>();
                 try {
                     method=request.processRequest();
@@ -52,7 +52,7 @@ public class ConnectionListener {
                         returned=pool.invokeMethod(path, Post.class,entry.getValue());
                     corsPolicy=pool.getCorsPolicy(path);
                 }
-
+                //TODO вызвать нужный мвс контроллер и передать в него request
                 Response response=new Response(socket.getOutputStream());
                 response.sendResponse(returned,corsPolicy);
 

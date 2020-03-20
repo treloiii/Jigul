@@ -1,7 +1,9 @@
-package com.trelloiii.jigul.web;
+package com.trelloiii.jigul.web.rest;
 
 import com.trelloiii.jigul.ioc.instance.FieldInstance;
 import com.trelloiii.jigul.ioc.instance.ObjectInstance;
+import com.trelloiii.jigul.web.Get;
+import com.trelloiii.jigul.web.Post;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

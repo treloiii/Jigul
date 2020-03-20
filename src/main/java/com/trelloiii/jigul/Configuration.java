@@ -4,7 +4,7 @@ import com.trelloiii.jigul.ioc.instance.ObjectInstance;
 import com.trelloiii.jigul.parser.Bean;
 import com.trelloiii.jigul.scanner.AnnotationScanner;
 import com.trelloiii.jigul.scanner.ClassScanner;
-import com.trelloiii.jigul.web.ControllerBuilder;
+import com.trelloiii.jigul.web.rest.ControllerBuilder;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;

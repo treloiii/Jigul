@@ -1,4 +1,4 @@
-package com.trelloiii.jigul.web.pool;
+package com.trelloiii.jigul.web.rest;
 
 import com.google.gson.Gson;
 import com.trelloiii.jigul.Configuration;
