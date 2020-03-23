@@ -6,6 +6,7 @@ import com.trelloiii.jigul.parser.ConfigType;
 import com.trelloiii.jigul.parser.Json;
 import com.trelloiii.jigul.parser.XmlConfigParser;
 import com.trelloiii.jigul.web.server.ConnectionListener;
+import com.trelloiii.jigul.web.server.ConnectionType;
 
 import java.io.FileReader;
 
@@ -15,12 +16,12 @@ public class Application {
     public static void start(Class<?> configurationClass){
         Config config=configurationClass.getAnnotation(Config.class);
         Configuration configuration=Configuration.build(config.iocPackage(),config.webPackage(),configurationClass);
-        ConnectionListener listener=new ConnectionListener(config.serverPort(),configuration);
+        ConnectionListener listener=new ConnectionListener(config.serverPort(),configuration, ConnectionType.REST);
     }
     public static void start(ConfigType type){
         Json config= readConfig(type);
         Configuration configuration=Configuration.build(config.getConfiguration().getIocPackages(),config.getConfiguration().getWebPackages(),config.getBeans());
-        ConnectionListener listener=new ConnectionListener(config.getConfiguration().getServerPort(),configuration);
+        ConnectionListener listener=new ConnectionListener(config.getConfiguration().getServerPort(),configuration,ConnectionType.MVC);
     }
 
     private static Json readConfig(ConfigType type){

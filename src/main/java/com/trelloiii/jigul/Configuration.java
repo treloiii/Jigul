@@ -4,6 +4,8 @@ import com.trelloiii.jigul.ioc.instance.ObjectInstance;
 import com.trelloiii.jigul.parser.Bean;
 import com.trelloiii.jigul.scanner.AnnotationScanner;
 import com.trelloiii.jigul.scanner.ClassScanner;
+import com.trelloiii.jigul.web.mvc.MvcController;
+import com.trelloiii.jigul.web.mvc.MvcControllerBuilder;
 import com.trelloiii.jigul.web.rest.ControllerBuilder;
 
 import java.io.UnsupportedEncodingException;
@@ -18,6 +20,7 @@ public class Configuration {
     private String[] webPackages;
     private ObjectInstance objectInstance;
     private ControllerBuilder controllerBuilder;
+    private MvcControllerBuilder mvcControllerBuilder;
     private static Configuration configuration;
     private Class<?> configClass;
     private List<Bean> beans;
@@ -27,6 +30,7 @@ public class Configuration {
         this.configClass=configClass;
         this.objectsPoolBuilder();
         this.controllersBuilder();
+        this.mvcControllersBuilder();
     }
 
     private Configuration(String[] IoCPackages,String[] webPackages,List<Bean> beans) {
@@ -36,6 +40,7 @@ public class Configuration {
         this.beans=beans;
         this.objectsPoolBuilder();
         this.controllersBuilder();
+        this.mvcControllersBuilder();
     }
     public static Configuration build(String [] packages,String[] webPackages,Class<?> configClass){
         if(configuration==null){
@@ -55,6 +60,10 @@ public class Configuration {
             throw new InstantiationException("There is no setup configuration in your project, cannot instance null config");
         else
             return configuration;
+    }
+
+    public MvcControllerBuilder getMvcControllerBuilder() {
+        return mvcControllerBuilder;
     }
 
     public ObjectInstance getObjectInstance() {
@@ -101,7 +110,6 @@ public class Configuration {
         ClassScanner scanner=ClassScanner.createScanner();
         AnnotationScanner annotationScanner=new AnnotationScanner();
         List<Class<?>> classes=new ArrayList<>();
-        List<Method> methods=new ArrayList<>();
         for(String pkg:webPackages){
             try{
                 classes.addAll(annotationScanner.scanControllers(scanner.scan(pkg)));
@@ -111,6 +119,20 @@ public class Configuration {
             }
         }
         this.controllerBuilder=ControllerBuilder.builder(classes,objectInstance);
+    }
+    private void mvcControllersBuilder(){
+        ClassScanner scanner=ClassScanner.createScanner();
+        AnnotationScanner annotationScanner=new AnnotationScanner();
+        List<Class<? extends MvcController>> classes=new ArrayList<>();
+        for(String pkg:webPackages){
+            try{
+                classes.addAll(annotationScanner.scanMvcControllers(scanner.scan(pkg)));
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        this.mvcControllerBuilder=MvcControllerBuilder.builder(classes,objectInstance);
     }
 
     @Deprecated
