@@ -1,10 +1,7 @@
 package com.trelloiii.jigul.web.mvc;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -136,9 +133,7 @@ public class JGLProcessor {
             result.add(sb.toString());
         }
         result.add("");
-        System.out.println("___");
-        String[] beforeLoops=m.replaceAll(":").split(":");
-        System.out.println(result);
+        String[] beforeLoops=m.replaceAll("@434@").split("@434@");
         StringBuilder res=new StringBuilder();
         int i=0;
         for(String before:beforeLoops){
@@ -292,12 +287,11 @@ public class JGLProcessor {
 
         for(int i=0;i<conditions.size();i++){
             boolean condition=processConditionInit(bodys.get(i),controller,controllerClass);
-            System.out.println(condition);
             if(condition)
                 result.add(conditions.get(i));
         }
         result.add("");
-        String[] beforeCondition=m.replaceAll(":").split(":");
+        String[] beforeCondition=m.replaceAll("@434@").split("@434@");
         StringBuilder res=new StringBuilder();
         int i=0;
         for(String before:beforeCondition){

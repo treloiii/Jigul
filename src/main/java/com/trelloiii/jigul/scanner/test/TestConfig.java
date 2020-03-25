@@ -7,8 +7,8 @@ import com.trelloiii.jigul.ioc.instance.InstanceType;
 @Config(iocPackage = {"com.trelloiii.jigul.scanner.test"},webPackage = {"com.trelloiii.jigul.scanner.test"})
 public class TestConfig {
 
-    @Bean(instanceType = InstanceType.SINGLE)
-    public Person getCar(){
-        return new Person("bean person","new bean person");
-    }
+//    @Bean(instanceType = InstanceType.SINGLE)
+//    public Person getCar(){
+//        return new Person("bean person","new bean person");
+//    }
 }

@@ -59,17 +59,28 @@ public class MvcControllersPool {
     private Map<String, Object> retypeParams(Map<String, String> params, Map<String, Class<?>> paramTypes) {
         Map<String,Object> resultMap=new HashMap<>();
         Gson gson=new Gson();
-        for(Map.Entry<String,String> entry:params.entrySet()){
-            String paramName=entry.getKey();
-            Object o=gson.fromJson(entry.getValue(),paramTypes.get(paramName));
-            resultMap.put(paramName,o);
+        try {
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                String paramName = entry.getKey();
+                Object o = gson.fromJson(entry.getValue(), paramTypes.get(paramName));
+                resultMap.put(paramName, o);
+            }
+            return resultMap;
         }
-        return resultMap;
+        catch (NullPointerException e){
+            return null;
+        }
     }
 
     private String getControllerView(String path) throws IOException {
         StringBuilder a = new StringBuilder();
-        FileReader fileReader = new FileReader("src/main/resources/"+path+".jgl");
+        FileReader fileReader;
+        if(!path.equals("/")) {
+            fileReader = new FileReader("src/main/resources/" + path + ".jgl");
+        }
+        else {
+            fileReader = new FileReader("src/main/resources/index.jgl");
+        }
         int c;
         while ((c = fileReader.read()) != -1) {
             a.append((char) c);

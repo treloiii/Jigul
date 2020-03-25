@@ -9,15 +9,15 @@ import com.trelloiii.jigul.web.mvc.MvcRequestParam;
 
 import java.util.Map;
 
-@MVCC(path = "/index")
+@MVCC(path = "/")
 public class MvcTest implements MvcController {
 
     public String name="DEFAULT";
     public String[] twos={"1","2","3"};
     @Override
-    @MvcRequestParam(paramName = "name",paramType = String.class)
+//    @MvcRequestParam(paramName = "name",paramType = String.class)
     public HttpCode handle(Map<String, Object> requestParams) {
-        this.name=(String) requestParams.get("name");
+//        this.name=(String) requestParams.get("name");
         return new Ok("OK");
     }
 }
