@@ -8,6 +8,7 @@
             <iocPackage>com.trelloiii.jigul.scanner.test</iocPackage>
         </iocPackages>
         <serverPort>8082</serverPort>
+        <connectionType>REST</connectionType>
     </configuration>
     <beans>
         <bean>

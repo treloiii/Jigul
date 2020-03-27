@@ -2,6 +2,7 @@ package com.trelloiii.jigul.parser;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+import com.trelloiii.jigul.web.server.ConnectionType;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -23,7 +24,7 @@ public class XmlConfigParser {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-            File f = new File("/Users/trelloiii/Desktop/JavaProjects/Jigul/src/main/resources/jigul-config.xml");
+            File f = new File("src/main/resources/jigul-config.xml");
             this.document = builder.parse(f);
             document.getDocumentElement().normalize();
         }
@@ -35,7 +36,8 @@ public class XmlConfigParser {
         String [] webPkgs=getArrayTextContent(parseMultiTag("webPackage",document.getDocumentElement()));
         String [] iocPkgs=getArrayTextContent(parseMultiTag("iocPackage",document.getDocumentElement()));
         int serverPort=Integer.parseInt(parseSingleTag("serverPort",document.getDocumentElement()).getTextContent());
-        JsonConfiguration jsonConfiguration=new JsonConfiguration(webPkgs,iocPkgs,serverPort);
+        ConnectionType connectionType=ConnectionType.valueOf(parseSingleTag("connectionType",document.getDocumentElement()).getTextContent());
+        JsonConfiguration jsonConfiguration=new JsonConfiguration(webPkgs,iocPkgs, connectionType,serverPort);
         List<Bean> beans=parseBeans();
         return new Json(jsonConfiguration,beans);
     }

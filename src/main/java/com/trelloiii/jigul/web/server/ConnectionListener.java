@@ -82,7 +82,6 @@ public class ConnectionListener {
     }
 }
 class RequestProcessorRest extends Thread{
-    private volatile boolean running=false;
     private Socket socket;
     private ControllersPool pool;
     public RequestProcessorRest(Socket socket, ControllersPool pool){
@@ -113,7 +112,6 @@ class RequestProcessorRest extends Thread{
                     returned = pool.invokeMethod(path, Post.class, entry.getValue());
                 corsPolicy = pool.getCorsPolicy(path);
             }
-            //TODO вызвать нужный мвс контроллер и передать в него request
             Response response = new Response(socket.getOutputStream());
             response.sendResponse(returned, corsPolicy, ConnectionType.REST);
 
@@ -136,7 +134,7 @@ class RequestProcessorMVC extends Thread {
     @Override
     public void run() {
         try {
-            Request request = new Request(socket);//TODO переделать Request чтоб хранить в нем обработтаный запрос
+            Request request = new Request(socket);
             Map<String,Map<String,String>> method=new HashMap<>();
             try {
                 method=request.processRequest();
@@ -154,7 +152,6 @@ class RequestProcessorMVC extends Thread {
                 String reqType=entry.getKey().substring(0,1);
                 returned=mvcPool.invokeMethod(path,entry.getValue());
             }
-            //TODO вызвать нужный мвс контроллер и передать в него request
             Response response=new Response(socket.getOutputStream());
             response.sendResponse(returned,null,ConnectionType.MVC);
 

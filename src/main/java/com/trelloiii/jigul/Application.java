@@ -11,8 +11,6 @@ import com.trelloiii.jigul.web.server.ConnectionType;
 import java.io.FileReader;
 
 public class Application {
-    public static final String JSON="json";
-    public static final String XML="xml";
     public static void start(Class<?> configurationClass){
         Config config=configurationClass.getAnnotation(Config.class);
         Configuration configuration=Configuration.build(config.iocPackage(),config.webPackage(),configurationClass);
@@ -21,14 +19,14 @@ public class Application {
     public static void start(ConfigType type){
         Json config= readConfig(type);
         Configuration configuration=Configuration.build(config.getConfiguration().getIocPackages(),config.getConfiguration().getWebPackages(),config.getBeans());
-        ConnectionListener listener=new ConnectionListener(config.getConfiguration().getServerPort(),configuration,ConnectionType.MVC);
+        ConnectionListener listener=new ConnectionListener(config.getConfiguration().getServerPort(),configuration,config.getConfiguration().getConnectionType());
     }
 
     private static Json readConfig(ConfigType type){
         try {
             if(type.equals(ConfigType.JSON)) {
                 Gson gson = new Gson();
-                String json = "/Users/trelloiii/Desktop/JavaProjects/Jigul/src/main/resources/jigul-config.json";
+                String json = "src/main/resources/jigul-config.json";
                 Json config = gson.fromJson(new JsonReader(new FileReader(json)), Json.class);
                 return config;
             }

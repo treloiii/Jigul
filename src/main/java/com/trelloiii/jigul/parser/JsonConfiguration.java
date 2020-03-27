@@ -1,10 +1,13 @@
 package com.trelloiii.jigul.parser;
 
+import com.trelloiii.jigul.web.server.ConnectionType;
+
 import java.util.Arrays;
 
 public class JsonConfiguration {
     private String[] webPackages;
     private String[] iocPackages;
+    private ConnectionType connectionType;
     private int serverPort;
 
 
@@ -20,6 +23,10 @@ public class JsonConfiguration {
         this.serverPort = serverPort;
     }
 
+    public void setConnectionType(ConnectionType connectionType) {
+        this.connectionType = connectionType;
+    }
+
     public String[] getWebPackages() {
         return webPackages;
     }
@@ -32,10 +39,15 @@ public class JsonConfiguration {
         return serverPort;
     }
 
-    public JsonConfiguration(String[] webPackages, String[] iocPackages, int serverPort) {
+    public ConnectionType getConnectionType() {
+        return connectionType;
+    }
+
+    public JsonConfiguration(String[] webPackages, String[] iocPackages,ConnectionType connectionType, int serverPort) {
         this.webPackages = webPackages;
         this.iocPackages = iocPackages;
         this.serverPort = serverPort;
+        this.connectionType=connectionType;
     }
 
     @Override

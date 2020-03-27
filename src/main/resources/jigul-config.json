@@ -6,7 +6,8 @@
     "iocPackages": [
       "com.trelloiii.jigul.scanner.test"
     ],
-    "serverPort": 8080
+    "serverPort": 8082,
+    "connectionType": "MVC"
   },
   "beans": [
     {
