@@ -31,6 +31,10 @@ public class Person {
         return name;
     }
 
+    public String getSurname() {
+        return surname;
+    }
+
     public void voice(){
         System.out.println("my name is: "+this.name);
     }

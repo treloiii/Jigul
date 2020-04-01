@@ -7,6 +7,9 @@ public class Ok extends HttpCode {
         super(200,body);
         System.out.println("OK");
     }
+    public Ok(){
+        super(200,null);
+    }
 
 //    @Override
 //    public int getCODE() {
